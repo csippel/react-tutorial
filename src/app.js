@@ -1,51 +1,80 @@
 console.log('running app.js from /src');
 
-// template 1
-
 const app = {
-    title: 'Title',
-    subtitle: 'Subtitle',
-    options: ['One', 'Two']
+    title: 'Wahl-Wal',
+    subtitle: 'Er macht immer so Sachen wie Sachen auswählen.',
+    options: []
 };
 
-const template = (
-    <div>
-        <h1>{app.title}</h1>
-        {(app.subtitle) && <p>{app.subtitle}</p>}
-        <p>{app.options && app.options.length > 0 ? 'Here are your options' : 'no options'}</p>
-        <ol>
-            <li>Item one</li>
-            <li>Item two</li>
-        </ol>
-    </div>
-);
+const onFormSubmit = (e) => {
+    e.preventDefault();
 
+    const option = e.target.elements.option.value;
 
-
-// template 2
-
-const user = {
-    name: 'Test Test',
-    age: 19,
-    location: 'Berlin'
-};
-
-function getLocation(location) {
-    if (location) {
-        return <p>Location: {location}</p>;
-    } else {
-        return undefined;
+    if (option) {
+        app.options.push(option);
+        e.target.elements.option.value = '';
     }
-}
+    render();
+};
 
-const templateTwo = (
-    <div>
-        <h1>{user.name ? user.name : 'Anonymous'}</h1>
-        {(user.age && user.age >= 18) && <p>Age: {user.age}</p>}
-        {getLocation(user.location)}
-    </div>
-);
 
+/**
+ * onMakeDecision - Description
+ *
+ * @return {type} Description
+ */
+const onMakeDecision = () => {
+    const randomNumber = Math.floor(Math.random() * app.options.length);
+    const option = app.options[randomNumber];
+    alert(option);
+};
+
+
+const onWipeOptions = () => {
+    let confirmation = confirm('Wirklich alle Entscheidungsmöglichkeiten entfernen?');
+
+    if (confirmation) {
+        app.options = [];
+        render();
+    }
+};
 
 const appRoot = document.getElementById('app');
-ReactDOM.render(templateTwo, appRoot);
+
+
+const render = () => {
+    const template = (
+        <div>
+            <h1>{app.title}</h1>
+            {(app.subtitle) && <p>{app.subtitle}</p>}
+            <p>{app.options && app.options.length > 0 ? 'Deine Entscheidungsmöglichkeiten' : 'keine Entscheidungsmöglichkeiten'}</p>
+
+            <ol>
+                {
+                    app.options.map((option) => <li key={option}>{option}</li>)
+                }
+            </ol>
+            <form onSubmit={onFormSubmit}>
+                <input type="text" name="option" />
+                <button>Hinzufügen</button>
+            </form>
+            <button disabled={app.options.length < 1} onClick={onWipeOptions}>Alles entfernen</button>
+            <button disabled={app.options.length < 1} onClick={onMakeDecision}>Den Wal entscheiden lassen</button>
+        </div>
+    );
+
+    ReactDOM.render(template, appRoot);
+};
+
+render();
+
+
+
+
+/*
+
+<button>Show details</button>
+{(toggleButton)}
+
+*/
