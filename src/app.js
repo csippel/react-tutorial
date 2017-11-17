@@ -40,6 +40,12 @@ const onWipeOptions = () => {
     }
 };
 
+let visible = false;
+const toggleVisibility = () => {
+    visible = !visible;
+    render();
+};
+
 const appRoot = document.getElementById('app');
 
 
@@ -61,6 +67,13 @@ const render = () => {
             </form>
             <button disabled={app.options.length < 1} onClick={onWipeOptions}>Alles entfernen</button>
             <button disabled={app.options.length < 1} onClick={onMakeDecision}>Den Wal entscheiden lassen</button>
+
+
+            <button onClick={toggleVisibility}>
+                {visible ? 'Hide ' : 'Show '} details
+            </button>
+            {visible && <p>Now visible, oh wow</p>}
+
         </div>
     );
 
@@ -68,13 +81,3 @@ const render = () => {
 };
 
 render();
-
-
-
-
-/*
-
-<button>Show details</button>
-{(toggleButton)}
-
-*/
