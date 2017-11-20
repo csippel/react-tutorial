@@ -59,5 +59,16 @@ class Traveller extends Person {
 const me = new Traveller('Pastparty', 700, 'Pallet Town');
 console.log(me.getGreeting());
 
-const other = new Traveller();
+const other = new Traveller(undefined, undefined, 'Nowhere');
 console.log(other.getGreeting());
+
+
+//
+//
+// class Planet {
+//     constructor(...args) {
+//         this.args.map((properties) => );
+//
+//         }
+//     }
+// }
