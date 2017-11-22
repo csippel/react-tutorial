@@ -1,3 +1,14 @@
+const obj = {
+    name: 'Kraken',
+    getName() {
+        return this.name;
+    }
+};
+
+const getName = obj.getName.bind(obj);
+
+console.log(getName());
+
 class WahlWalApp extends React.Component {
     render() {
         const title = 'Der Wahl-Wal';
@@ -28,7 +39,7 @@ class Header extends React.Component {
 
 class Action extends React.Component {
     handlePick() {
-        console.log('Choooooosed');
+        console.log('Ausgewählt');
     }
 
     render() {
@@ -41,14 +52,19 @@ class Action extends React.Component {
 }
 
 class Options extends React.Component {
-    removeAllOptions() {
-        console.log('Alles entfernt.');
+    constructor(props) {
+        super(props);
+        this.handleRemoveAllOptions = this.handleRemoveAllOptions.bind(this)
+    }
+
+    handleRemoveAllOptions() {
+        console.log('Alles entfernt.', this.props.options);
     }
 
     render() {
         return (
             <div>
-                <button onClick={this.removeAllOptions}>Alle Optionen entfernen</button>
+                <button onClick={this.handleRemoveAllOptions}>Alle Optionen entfernen</button>
                 {
                     this.props.options.map((option) => <Option key={option} optionText={option} />)
                 }
@@ -68,10 +84,25 @@ class Option extends React.Component {
 }
 
 class AddOption extends React.Component {
+    handleAddOption(e) {
+        e.preventDefault();
+
+        const option = e.target.elements.option.value.trim();
+
+        if (option) {
+            alert(option);
+            // app.options.push(option);
+            // e.target.elements.option.value = '';
+        }
+    }
+
     render() {
         return (
             <div>
-                <button>Auswahl hinzufügen</button>
+                <form onSubmit={this.handleAddOption}>
+                    <input type="text" name="option" />
+                    <button>Auswahl hinzufügen</button>
+                </form>
             </div>
         );
     }
