@@ -75,7 +75,8 @@ var WahlWalApp = function (_React$Component) {
                 }),
                 React.createElement(AddOption, {
                     handleAddOption: this.handleAddOption
-                })
+                }),
+                React.createElement(TestCountdown, null)
             );
         }
     }]);
@@ -251,6 +252,55 @@ var AddOption = function (_React$Component6) {
     }]);
 
     return AddOption;
+}(React.Component);
+
+var TestCountdown = function (_React$Component7) {
+    _inherits(TestCountdown, _React$Component7);
+
+    function TestCountdown(props) {
+        _classCallCheck(this, TestCountdown);
+
+        var _this7 = _possibleConstructorReturn(this, (TestCountdown.__proto__ || Object.getPrototypeOf(TestCountdown)).call(this, props));
+
+        _this7.handleCountdown = _this7.handleCountdown.bind(_this7);
+        _this7.state = {
+            seconds: 10
+        };
+        return _this7;
+    }
+
+    _createClass(TestCountdown, [{
+        key: 'handleCountdown',
+        value: function handleCountdown() {
+            var _this8 = this;
+
+            var minus = function minus() {
+                _this8.setState(function (prevState) {
+                    return {
+                        seconds: prevState.seconds - 1
+                    };
+                });
+            };
+            setInterval(minus, 1000);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                null,
+                React.createElement(
+                    'button',
+                    { onClick: this.handleCountdown },
+                    'Noch ',
+                    this.state.seconds,
+                    ' Sekunden warten'
+                )
+            );
+        }
+    }]);
+
+    return TestCountdown;
 }(React.Component);
 
 ReactDOM.render(React.createElement(WahlWalApp, null), document.getElementById('app'));

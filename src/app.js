@@ -54,6 +54,8 @@ class WahlWalApp extends React.Component {
                 <AddOption
                     handleAddOption={this.handleAddOption}
                 />
+
+                <TestCountdown />
             </div>
         );
     }
@@ -137,6 +139,36 @@ class AddOption extends React.Component {
                     <input type="text" name="option" />
                     <button>Auswahl hinzufügen</button>
                 </form>
+            </div>
+        );
+    }
+}
+
+
+class TestCountdown extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleCountdown = this.handleCountdown.bind(this);
+        this.state = {
+            seconds: 10
+        };
+    }
+
+    handleCountdown() {
+        let minus = () => {
+            this.setState((prevState) => {
+                return {
+                    seconds: prevState.seconds - 1
+                };
+            })
+        };
+        setInterval(minus, 1000);
+    }
+
+    render() {
+        return (
+            <div>
+                <button onClick={this.handleCountdown}>Noch {this.state.seconds} Sekunden warten</button>
             </div>
         );
     }
