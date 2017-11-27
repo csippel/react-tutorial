@@ -264,7 +264,8 @@ var TestCountdown = function (_React$Component7) {
 
         _this7.handleCountdown = _this7.handleCountdown.bind(_this7);
         _this7.state = {
-            seconds: 10
+            ticks: 1000,
+            enabled: true
         };
         return _this7;
     }
@@ -274,14 +275,25 @@ var TestCountdown = function (_React$Component7) {
         value: function handleCountdown() {
             var _this8 = this;
 
+            var isPaused = false;
+
             var minus = function minus() {
                 _this8.setState(function (prevState) {
-                    return {
-                        seconds: prevState.seconds - 1
-                    };
+                    if (prevState.ticks <= 0) {
+                        clearInterval(timer);
+                        isPaused = true;
+                        return {
+                            enabled: true
+                        };
+                    } else {
+                        return {
+                            ticks: prevState.ticks - 1,
+                            enabled: false
+                        };
+                    }
                 });
             };
-            setInterval(minus, 1000);
+            var timer = setInterval(minus, 10);
         }
     }, {
         key: 'render',
@@ -291,10 +303,18 @@ var TestCountdown = function (_React$Component7) {
                 null,
                 React.createElement(
                     'button',
-                    { onClick: this.handleCountdown },
-                    'Noch ',
-                    this.state.seconds,
-                    ' Sekunden warten'
+                    { onClick: this.handleCountdown, disabled: !this.state.enabled },
+                    this.handleCountdown.isPaused ? React.createElement(
+                        'p',
+                        null,
+                        'fertig'
+                    ) : React.createElement(
+                        'p',
+                        null,
+                        'Noch ',
+                        this.state.ticks,
+                        ' Sekunden warten'
+                    )
                 )
             );
         }

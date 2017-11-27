@@ -150,25 +150,43 @@ class TestCountdown extends React.Component {
         super(props);
         this.handleCountdown = this.handleCountdown.bind(this);
         this.state = {
-            seconds: 10
+            ticks: 1000,
+            enabled: true
         };
     }
 
     handleCountdown() {
+        let isPaused = false;
+
         let minus = () => {
             this.setState((prevState) => {
-                return {
-                    seconds: prevState.seconds - 1
-                };
+                if (prevState.ticks <= 0) {
+                    clearInterval(timer);
+                    isPaused = true;
+                    return {
+                        enabled: true
+                    };
+                } else {
+                    return {
+                        ticks: prevState.ticks - 1,
+                        enabled: false
+                    };
+                }
             })
         };
-        setInterval(minus, 1000);
+        let timer = setInterval(minus, 10);
     }
 
     render() {
         return (
             <div>
-                <button onClick={this.handleCountdown}>Noch {this.state.seconds} Sekunden warten</button>
+                <button onClick={this.handleCountdown} disabled={!this.state.enabled}>
+                    {this.handleCountdown.isPaused ? (
+                        <p>fertig</p>
+                    ) : (
+                        <p>Noch {this.state.ticks} Sekunden warten</p>
+                    )}
+                </button>
             </div>
         );
     }
