@@ -58,13 +58,12 @@ var WahlWalApp = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var title = 'Der Wahl-Wal';
             var subtitle = 'Er macht immer so Sachen wie Sachen auswählen.';
 
             return React.createElement(
                 'div',
                 null,
-                React.createElement(Header, { title: title, subtitle: subtitle }),
+                React.createElement(Header, { subtitle: subtitle }),
                 React.createElement(Action, {
                     hasOptions: this.state.options.length > 0,
                     handlePick: this.handlePick
@@ -84,135 +83,79 @@ var WahlWalApp = function (_React$Component) {
     return WahlWalApp;
 }(React.Component);
 
-var Header = function (_React$Component2) {
-    _inherits(Header, _React$Component2);
+var Header = function Header(props) {
+    return React.createElement(
+        'div',
+        null,
+        React.createElement(
+            'h1',
+            null,
+            props.title
+        ),
+        React.createElement(
+            'p',
+            null,
+            props.subtitle
+        )
+    );
+};
 
-    function Header() {
-        _classCallCheck(this, Header);
+Header.defaultProps = {
+    title: 'Der Wahl-Wal'
+};
 
-        return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
-    }
+var Action = function Action(props) {
+    return React.createElement(
+        'div',
+        null,
+        React.createElement(
+            'button',
+            {
+                onClick: props.handlePick,
+                disabled: !props.hasOptions
+            },
+            'Was soll ich machen?'
+        )
+    );
+};
 
-    _createClass(Header, [{
-        key: 'render',
-        value: function render() {
-            return React.createElement(
-                'div',
-                null,
-                React.createElement(
-                    'h1',
-                    null,
-                    this.props.title
-                ),
-                React.createElement(
-                    'p',
-                    null,
-                    this.props.subtitle
-                )
-            );
-        }
-    }]);
+var Options = function Options(props) {
+    return React.createElement(
+        'div',
+        null,
+        React.createElement(
+            'button',
+            { onClick: props.handleDeleteOptions },
+            'Alle Optionen entfernen'
+        ),
+        props.options.map(function (option) {
+            return React.createElement(Option, { key: option, optionText: option });
+        })
+    );
+};
 
-    return Header;
-}(React.Component);
+var Option = function Option(props) {
+    return React.createElement(
+        'div',
+        null,
+        '\u2022 ',
+        props.optionText
+    );
+};
 
-var Action = function (_React$Component3) {
-    _inherits(Action, _React$Component3);
-
-    function Action() {
-        _classCallCheck(this, Action);
-
-        return _possibleConstructorReturn(this, (Action.__proto__ || Object.getPrototypeOf(Action)).apply(this, arguments));
-    }
-
-    _createClass(Action, [{
-        key: 'render',
-        value: function render() {
-            return React.createElement(
-                'div',
-                null,
-                React.createElement(
-                    'button',
-                    {
-                        onClick: this.props.handlePick,
-                        disabled: !this.props.hasOptions
-                    },
-                    'Was soll ich machen?'
-                )
-            );
-        }
-    }]);
-
-    return Action;
-}(React.Component);
-
-var Options = function (_React$Component4) {
-    _inherits(Options, _React$Component4);
-
-    function Options() {
-        _classCallCheck(this, Options);
-
-        return _possibleConstructorReturn(this, (Options.__proto__ || Object.getPrototypeOf(Options)).apply(this, arguments));
-    }
-
-    _createClass(Options, [{
-        key: 'render',
-        value: function render() {
-            return React.createElement(
-                'div',
-                null,
-                React.createElement(
-                    'button',
-                    { onClick: this.props.handleDeleteOptions },
-                    'Alle Optionen entfernen'
-                ),
-                this.props.options.map(function (option) {
-                    return React.createElement(Option, { key: option, optionText: option });
-                })
-            );
-        }
-    }]);
-
-    return Options;
-}(React.Component);
-
-var Option = function (_React$Component5) {
-    _inherits(Option, _React$Component5);
-
-    function Option() {
-        _classCallCheck(this, Option);
-
-        return _possibleConstructorReturn(this, (Option.__proto__ || Object.getPrototypeOf(Option)).apply(this, arguments));
-    }
-
-    _createClass(Option, [{
-        key: 'render',
-        value: function render() {
-            return React.createElement(
-                'div',
-                null,
-                '\u2022 ',
-                this.props.optionText
-            );
-        }
-    }]);
-
-    return Option;
-}(React.Component);
-
-var AddOption = function (_React$Component6) {
-    _inherits(AddOption, _React$Component6);
+var AddOption = function (_React$Component2) {
+    _inherits(AddOption, _React$Component2);
 
     function AddOption(props) {
         _classCallCheck(this, AddOption);
 
-        var _this6 = _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).call(this, props));
+        var _this2 = _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).call(this, props));
 
-        _this6.handleAddOption = _this6.handleAddOption.bind(_this6);
-        _this6.state = {
+        _this2.handleAddOption = _this2.handleAddOption.bind(_this2);
+        _this2.state = {
             error: undefined
         };
-        return _this6;
+        return _this2;
     }
 
     _createClass(AddOption, [{
@@ -254,31 +197,31 @@ var AddOption = function (_React$Component6) {
     return AddOption;
 }(React.Component);
 
-var TestCountdown = function (_React$Component7) {
-    _inherits(TestCountdown, _React$Component7);
+var TestCountdown = function (_React$Component3) {
+    _inherits(TestCountdown, _React$Component3);
 
     function TestCountdown(props) {
         _classCallCheck(this, TestCountdown);
 
-        var _this7 = _possibleConstructorReturn(this, (TestCountdown.__proto__ || Object.getPrototypeOf(TestCountdown)).call(this, props));
+        var _this3 = _possibleConstructorReturn(this, (TestCountdown.__proto__ || Object.getPrototypeOf(TestCountdown)).call(this, props));
 
-        _this7.handleCountdown = _this7.handleCountdown.bind(_this7);
-        _this7.state = {
+        _this3.handleCountdown = _this3.handleCountdown.bind(_this3);
+        _this3.state = {
             ticks: 1000,
             enabled: true
         };
-        return _this7;
+        return _this3;
     }
 
     _createClass(TestCountdown, [{
         key: 'handleCountdown',
         value: function handleCountdown() {
-            var _this8 = this;
+            var _this4 = this;
 
             var isPaused = false;
 
             var minus = function minus() {
-                _this8.setState(function (prevState) {
+                _this4.setState(function (prevState) {
                     if (prevState.ticks <= 0) {
                         clearInterval(timer);
                         isPaused = true;
@@ -304,11 +247,7 @@ var TestCountdown = function (_React$Component7) {
                 React.createElement(
                     'button',
                     { onClick: this.handleCountdown, disabled: !this.state.enabled },
-                    this.handleCountdown.isPaused ? React.createElement(
-                        'p',
-                        null,
-                        'fertig'
-                    ) : React.createElement(
+                    React.createElement(
                         'p',
                         null,
                         'Noch ',
@@ -322,5 +261,14 @@ var TestCountdown = function (_React$Component7) {
 
     return TestCountdown;
 }(React.Component);
+
+// const User = (props) => {
+//     return (
+//         <div>
+//             <p>Name: {props.name}</p>
+//             <p>Age: {props.age}</p>
+//         </div>
+//     );
+// };
 
 ReactDOM.render(React.createElement(WahlWalApp, null), document.getElementById('app'));
