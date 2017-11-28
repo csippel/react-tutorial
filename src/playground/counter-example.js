@@ -13,8 +13,6 @@ class Counter extends React.Component {
 
     componentDidMount() {
         try {
-            console.log('fetch data');
-
             const data = localStorage.getItem('counter');
             const parsedData = parseInt(data, 10);
             if (!isNaN(data)) {
@@ -26,8 +24,6 @@ class Counter extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log('save data', this.state.count);
-
         // only save data when there is a difference
         if (prevState.count !== this.state.count) {
             localStorage.setItem('counter', this.state.count);
