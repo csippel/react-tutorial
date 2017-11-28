@@ -11,6 +11,29 @@ class Counter extends React.Component {
         };
     }
 
+    componentDidMount() {
+        try {
+            console.log('fetch data');
+            const data = localStorage.getItem('counter');
+            const parsedData = parseInt(data, 10);
+            if (data) {
+                this.setState(() => ({ count: parsedData }));
+            }
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log('save data', this.state.count);
+
+        // only save data when there is a difference
+        if (prevState.count !== this.state.count) {
+            const data = parseInt(this.state.count, 10);
+            localStorage.setItem('counter', data);
+        }
+    }
+
     handlePlus() {
         this.setState((prevState) => {
             return {
