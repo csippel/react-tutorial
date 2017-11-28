@@ -1,3 +1,6 @@
+/**
+ * WahlWalApp - Get your decisions done.
+ */
 class WahlWalApp extends React.Component {
     constructor(props) {
         super(props);
