@@ -31,9 +31,10 @@ var Counter = function (_React$Component) {
         value: function componentDidMount() {
             try {
                 console.log('fetch data');
+
                 var data = localStorage.getItem('counter');
                 var parsedData = parseInt(data, 10);
-                if (data) {
+                if (!isNaN(data)) {
                     this.setState(function () {
                         return { count: parsedData };
                     });
@@ -49,8 +50,7 @@ var Counter = function (_React$Component) {
 
             // only save data when there is a difference
             if (prevState.count !== this.state.count) {
-                var data = parseInt(this.state.count, 10);
-                localStorage.setItem('counter', data);
+                localStorage.setItem('counter', this.state.count);
             }
         }
     }, {
