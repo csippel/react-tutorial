@@ -7,9 +7,35 @@ class WahlWalApp extends React.Component {
         this.handlePick = this.handlePick.bind(this);
         this.handleAddOption = this.handleAddOption.bind(this);
         this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
+        this.handleDeleteOption = this.handleDeleteOption.bind(this);
         this.state = {
-            options: []
+            options: props.options
         };
+    }
+
+    componentDidMount() {
+        try {
+            const json = localStorage.getItem('options');
+            const options = JSON.parse(json);
+
+            // only call this if options is existing
+            if (options) {
+                this.setState(() => ({ options }));
+            }
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.options.length !== this.state.options.length) {
+            const json = JSON.stringify(this.state.options);
+            localStorage.setItem('options', json);
+        }
+    }
+
+    componentWillUMount() {
+        console.log('Component will unmount');
     }
 
     handlePick() {
@@ -24,27 +50,23 @@ class WahlWalApp extends React.Component {
             return 'Das gibt es doch schon.';
         }
 
-        this.setState((prevState) => {
-            return {
-                options: prevState.options.concat(option)
-            }
-        });
+        this.setState((prevState) => ({ options: prevState.options.concat(option) }));
     }
 
     handleDeleteOptions() {
-        this.setState(() => {
-            return {
-                options: []
-            }
-        });
+        this.setState(() => ({ options: [] }))
+    }
+
+    handleDeleteOption(optionToRemove) {
+        this.setState((prevState) => ({
+            options: prevState.options.filter((option) => optionToRemove !== option)
+        }));
     }
 
     render() {
-        const subtitle = 'Er macht immer so Sachen wie Sachen auswählen.';
-
         return(
             <div>
-                <Header subtitle={subtitle} />
+                <Header />
                 <Action
                     hasOptions={this.state.options.length > 0}
                     handlePick={this.handlePick}
@@ -52,6 +74,7 @@ class WahlWalApp extends React.Component {
                 <Options
                     options={this.state.options}
                     handleDeleteOptions={this.handleDeleteOptions}
+                    handleDeleteOption={this.handleDeleteOption}
                 />
                 <AddOption
                     handleAddOption={this.handleAddOption}
@@ -63,18 +86,22 @@ class WahlWalApp extends React.Component {
     }
 }
 
+WahlWalApp.defaultProps = {
+    options: []
+};
 
 const Header = (props) => {
     return (
         <div>
             <h1>{props.title}</h1>
-            <p>{props.subtitle}</p>
+            {props.subtitle && <p>{props.subtitle}</p>}
         </div>
     );
 };
 
 Header.defaultProps = {
-    title: 'Der Wahl-Wal'
+    title: 'Der Wahl-Wal',
+    subtitle: 'Er macht immer so Sachen wie Sachen auswählen.'
 };
 
 const Action = (props) => {
@@ -96,8 +123,15 @@ const Options = (props) => {
             <button onClick={props.handleDeleteOptions}>
                 Alle Optionen entfernen
             </button>
+            {props.options.length === 0 && <p>Erstelle ein paar Auswahlmöglichkeiten.</p>}
             {
-                props.options.map((option) => <Option key={option} optionText={option} />)
+                props.options.map((option) => (
+                    <Option
+                        key={option}
+                        optionText={option}
+                        handleDeleteOption={props.handleDeleteOption}
+                    />
+                ))
             }
         </div>
     );
@@ -106,7 +140,14 @@ const Options = (props) => {
 const Option = (props) => {
     return (
         <div>
-            &bull; {props.optionText}
+            {props.optionText}
+            <button
+                onClick={() => {
+                    props.handleDeleteOption(props.optionText);
+                }}
+            >
+                &times;
+            </button>
         </div>
     );
 };
@@ -126,9 +167,11 @@ class AddOption extends React.Component {
         const option = e.target.elements.option.value.trim();
         const error  = this.props.handleAddOption(option);
 
-        this.setState(() => {
-            return { error };
-        });
+        this.setState(() => ({ error }));
+
+        if (!error) {
+            e.target.elements.option.value = '';
+        }
     }
 
     render() {

@@ -7,7 +7,7 @@ class Counter extends React.Component {
         this.handleReset = this.handleReset.bind(this);
 
         this.state = {
-            count: 0
+            count: this.props.startNumber
         };
     }
 
@@ -47,8 +47,11 @@ class Counter extends React.Component {
     };
 }
 
+Counter.defaultProps = {
+    startNumber: 0
+};
 
-ReactDOM.render(<Counter />, document.getElementById('app'));
+ReactDOM.render(<Counter startNumber={38} />, document.getElementById('app'));
 // let count = 0;
 //
 // const addOne = () => {
