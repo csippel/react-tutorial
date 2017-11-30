@@ -1,14 +1,34 @@
-// import './utils.js';
-// import { square, add } from './utils.js';
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+const template = <p>JSX by webpack and included babel loader</p>;
+
+ReactDOM.render(template, document.getElementById('app'));
+
 //
-// console.log('app is running.');
 //
-// console.log(square(12), add(16,24));
-
-
-import { isAdult, canDrink } from './person.js'
-
-console.log(isAdult(8));
-console.log(isAdult(44));
-console.log(canDrink(8));
-console.log(canDrink(44));
+// const l = (x) => console.log(+x, x);
+//
+// import validator from 'validator';
+//
+// console.log(validator.isEmail('bratvogel@fff.de'));
+// console.log(validator.isEmail('@BLARGELGARGEL.ss'));
+//
+// console.log(validator.isEmail('tetstest+dddd.ss'));
+//
+//
+//
+//
+// import isSenior, { isAdult, canDrink } from './person.js';
+//
+// console.log("isAdult(18)", isAdult(18));
+// console.log("canDrink(18)", canDrink(18));
+// console.log("isSenior(108)", isSenior(108));
+//
+//
+//
+// import subtract, { square, add } from './utils.js'
+//
+// console.log('square', square(8));
+// console.log('add', add(44,4));
+// console.log('subtract', subtract(10,6));
