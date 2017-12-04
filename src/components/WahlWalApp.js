@@ -19,11 +19,7 @@ export default class WahlWalApp extends React.Component {
     handlePick = () => {
         const randomNumber = Math.floor(Math.random() * this.state.options.length);
         const option = this.state.options[randomNumber];
-        // alert(this.state.options[randomNumber]);
-        this.setState(() => ({
-            selectedOption: option
-        }));
-
+        this.setState(() => ({ selectedOption: option }));
     };
 
     handleAddOption = (option) => {
@@ -47,9 +43,7 @@ export default class WahlWalApp extends React.Component {
     };
 
     handleClearSelectedOption = () => {
-        this.setState(() => ({
-            selectedOption: undefined
-        }));
+        this.setState(() => ({ selectedOption: undefined }));
     };
 
     componentDidMount() {
