@@ -8,19 +8,49 @@ import AddOption from './AddOption';
 import Options from './Options';
 import TestCountdown from './TestCountdown';
 import Action from './Action';
-
+import OptionModal from './OptionModal';
 
 export default class WahlWalApp extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handlePick = this.handlePick.bind(this);
-        this.handleAddOption = this.handleAddOption.bind(this);
-        this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
-        this.handleDeleteOption = this.handleDeleteOption.bind(this);
-        this.state = {
-            options: props.options
-        };
-    }
+    state = {
+        options: [],
+        selectedOption: undefined
+    };
+
+    handlePick = () => {
+        const randomNumber = Math.floor(Math.random() * this.state.options.length);
+        const option = this.state.options[randomNumber];
+        // alert(this.state.options[randomNumber]);
+        this.setState(() => ({
+            selectedOption: option
+        }));
+
+    };
+
+    handleAddOption = (option) => {
+        if (!option) {
+            return 'Bitte gib etwas Vernünftiges ein.';
+        } else if (this.state.options.indexOf(option) > -1) {
+            return 'Das gibt es doch schon.';
+        }
+
+        this.setState((prevState) => ({ options: prevState.options.concat(option) }));
+    };
+
+    handleDeleteOptions = () => {
+        this.setState(() => ({ options: [] }))
+    };
+
+    handleDeleteOption = (optionToRemove) => {
+        this.setState((prevState) => ({
+            options: prevState.options.filter((option) => optionToRemove !== option)
+        }));
+    };
+
+    handleClearSelectedOption = () => {
+        this.setState(() => ({
+            selectedOption: undefined
+        }));
+    };
 
     componentDidMount() {
         try {
@@ -47,31 +77,6 @@ export default class WahlWalApp extends React.Component {
         console.log('Component will unmount');
     }
 
-    handlePick() {
-        const randomNumber = Math.floor(Math.random() * this.state.options.length);
-        alert(this.state.options[randomNumber]);
-    }
-
-    handleAddOption(option) {
-        if (!option) {
-            return 'Bitte gib etwas Vernünftiges ein.';
-        } else if (this.state.options.indexOf(option) > -1) {
-            return 'Das gibt es doch schon.';
-        }
-
-        this.setState((prevState) => ({ options: prevState.options.concat(option) }));
-    }
-
-    handleDeleteOptions() {
-        this.setState(() => ({ options: [] }))
-    }
-
-    handleDeleteOption(optionToRemove) {
-        this.setState((prevState) => ({
-            options: prevState.options.filter((option) => optionToRemove !== option)
-        }));
-    }
-
     render() {
         return(
             <div>
@@ -90,13 +95,11 @@ export default class WahlWalApp extends React.Component {
                 />
 
                 <TestCountdown />
+                <OptionModal
+                    selectedOption={this.state.selectedOption}
+                    handleClearSelectedOption={this.handleClearSelectedOption}
+                />
             </div>
         );
     }
 }
-
-WahlWalApp.defaultProps = {
-    options: []
-};
-
-ReactDOM.render(<WahlWalApp />, document.getElementById('app'));
