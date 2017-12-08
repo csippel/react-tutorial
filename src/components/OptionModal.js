@@ -7,6 +7,7 @@ const OptionModal = (props) => (
         contentLabel="Deine Auswahl"
         appElement={document.getElementById('app')}
         onRequestClose={props.handleClearSelectedOption}
+        closeTimeoutMS={4000}
     >
         <h3>Deine Auswahl</h3>
         {props.selectedOption && <p>{props.selectedOption}</p>}
