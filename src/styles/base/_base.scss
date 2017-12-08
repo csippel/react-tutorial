@@ -1,0 +1,17 @@
+html {
+    font-size: 62.5%;
+}
+
+body {
+    background: $dark-blue;
+    font-family: -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir, "Segoe UI", Roboto, "Helvetica Neue", Oxygen-Sans, Cantarell, Ubuntu, "Franklin Gothic Medium", "Liberation Sans", sans-serif;
+    font-size: $m-size;
+}
+
+button {
+    cursor: pointer;
+
+    &:disabled {
+        cursor: default;
+    }
+}
