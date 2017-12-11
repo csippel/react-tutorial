@@ -37,3 +37,9 @@
     margin: 0 0 $l-size 0;
     word-break: break-all;
 }
+
+@media (min-width: $desktop-breakpoint) {
+    .modal {
+        padding: $xl-size;
+    }
+}

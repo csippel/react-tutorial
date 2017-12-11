@@ -6,7 +6,6 @@ import ReactDOM from 'react-dom';
 import Header from './Header';
 import AddOption from './AddOption';
 import Options from './Options';
-import TestCountdown from './TestCountdown';
 import Action from './Action';
 import OptionModal from './OptionModal';
 
@@ -93,7 +92,6 @@ export default class WahlWalApp extends React.Component {
                     </div>
                 </div>
 
-                <TestCountdown />
                 <OptionModal
                     selectedOption={this.state.selectedOption}
                     handleClearSelectedOption={this.handleClearSelectedOption}
